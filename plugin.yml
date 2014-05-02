@@ -1,0 +1,23 @@
+ name: CGEconomy
+ version: Indev v0.1
+ description: Economy Plugin for CyberneticGaming
+ author: Shockwave317
+ 
+ main: com.Shockwave317.cgeconomy.Main
+ 
+ commands:
+        money:
+         description: /money
+ permissions:
+    cgeconomy.*:
+        description: Gives access to all staff commands
+        children:
+            cgeconomy.admin: true
+            cgeconomy.player: true
+    cgeconomy.admin:
+        description: Access to /staff <user> accept/decline
+        default: op
+    cgeconomy.player:
+        description: Allows the user to apply for mod
+        default: op
+ 
