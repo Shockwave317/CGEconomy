@@ -50,6 +50,8 @@ public class Main extends JavaPlugin implements Listener {
 			player.sendMessage("/money bal");
 			if (player.hasPermission("cgeconomy.admin")) {
 				player.sendMessage("/money bal <user>");
+				player.sendMessage("/money admin give <username> <amount>");
+				player.sendMessage("/money admin take <username> <amount>");
 			}
 			player.sendMessage("========== " + intro + "==========");
 		}
@@ -71,20 +73,66 @@ public class Main extends JavaPlugin implements Listener {
     		}
     		}
     	}
+    	if (args.length == 3) {
+    		if (player.hasPermission("cgeconomy.player")) {
+    			if (args[0].equalsIgnoreCase("pay")) {
+    				if (args[1].equalsIgnoreCase(args[1])) {
+    					if (args[2].equalsIgnoreCase(args[2])) {
+    						if (getConfig().contains("Users." + player.getName())){
+    							if (getConfig().contains("Users." + args[1])){
+    								int amt =  Integer.parseInt(args[2]);
+            						//sender
+            						int sbal = getConfig().getInt("Users." + player.getName());
+                					int Sanswer = sbal - amt;
+                					getConfig().set("Users." + args[1], Sanswer);
+                					saveConfig();
+                					int aSbal = getConfig().getInt("Users." + player.getName());
+                					player.sendMessage("You have paid " + args[1] + symbol + args[2] + " you now have " + aSbal);
+                					//reciever
+                					String rString = args[1];
+                					Player reciever = Bukkit.getPlayer(rString);
+                					int rbal = getConfig().getInt("Users." + args[1]);
+                					int Ranswer = rbal + amt;
+                					getConfig().set("Users." + args[1], Ranswer);
+                					saveConfig();
+                					int aRbal = getConfig().getInt("Users." + args[1]);
+                					reciever.sendMessage("You have recieved " + symbol + args[2] + "from " + player.getDisplayName() +  " you now have " + aRbal);
+    							}
+    						}
+    					}
+    				}
+    			}
+    		}
+    	}
     	if (args.length == 4) {
     		if (player.hasPermission("cgeconomy.admin")) {
     		if (args[0].equalsIgnoreCase("admin")) {
         		if (args[1].equalsIgnoreCase("give")) {
         			if (args[2].equalsIgnoreCase(args[2])) {
-        				if (args[3]) {
+        				if (args[3].equalsIgnoreCase(args[3])) {
             				if (getConfig().contains("Users." + args[2])) {
             					int bal = getConfig().getInt("Users." + args[2]);
-            					int amt = args[3];
+            					int amt =  Integer.parseInt(args[3]);
             					int answer = bal + amt;
-            					getConfig().set("Users." + args[2], bal + args[3]);
+            					getConfig().set("Users." + args[2], answer);
             					saveConfig();
-            					player.sendMessage(args[2] + " has " + symbol + bal);
-            					
+            					int lbal = getConfig().getInt("Users." + args[2]);
+            					player.sendMessage(args[2] + " now has " + symbol + lbal);
+            				}
+        				}
+        			}
+        		}
+        		if (args[1].equalsIgnoreCase("take")) {
+        			if (args[2].equalsIgnoreCase(args[2])) {
+        				if (args[3].equalsIgnoreCase(args[3])) {
+            				if (getConfig().contains("Users." + args[2])) {
+            					int bal = getConfig().getInt("Users." + args[2]);
+            					int amt =  Integer.parseInt(args[3]);
+            					int answer = bal - amt;
+            					getConfig().set("Users." + args[2], answer);
+            					saveConfig();
+            					int lbal = getConfig().getInt("Users." + args[2]);
+            					player.sendMessage(args[2] + " now has " + symbol + lbal);
             				}
         				}
         			}
