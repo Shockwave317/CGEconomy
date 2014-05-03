@@ -85,9 +85,6 @@ public class Main extends JavaPlugin implements Listener {
             						int sbal = getConfig().getInt("Users." + player.getName());
                 					int Sanswer = sbal - amt;
                 					getConfig().set("Users." + args[1], Sanswer);
-                					saveConfig();
-                					int aSbal = getConfig().getInt("Users." + player.getName());
-                					player.sendMessage("You have paid " + args[1] + symbol + args[2] + " you now have " + aSbal);
                 					//reciever
                 					String rString = args[1];
                 					Player reciever = Bukkit.getPlayer(rString);
@@ -96,7 +93,9 @@ public class Main extends JavaPlugin implements Listener {
                 					getConfig().set("Users." + args[1], Ranswer);
                 					saveConfig();
                 					int aRbal = getConfig().getInt("Users." + args[1]);
-                					reciever.sendMessage("You have recieved " + symbol + args[2] + "from " + player.getDisplayName() +  " you now have " + aRbal);
+                					reciever.sendMessage("You have recieved " + symbol + args[2] + " from " + player.getDisplayName() +  " you now have " + aRbal);
+                					int aSbal = getConfig().getInt("Users." + player.getName());
+                					player.sendMessage("You have paid " + args[1] + " " + symbol + args[2] + " you now have " + aSbal);
     							}
     						}
     					}
